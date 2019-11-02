@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2019, The Linux Foundation. All rights reserved.
- * Copyright (C) 2017-2019 The LineageOS Project
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -35,7 +34,6 @@
 #include <hardware/power.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
-#include <vendor/lineage/power/1.0/ILineagePower.h>
 
 namespace android {
 namespace hardware {
@@ -49,14 +47,11 @@ using PowerHint_1_2 = ::android::hardware::power::V1_2::PowerHint;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::hardware::power::V1_2::IPower;
-using ::vendor::lineage::power::V1_0::ILineagePower;
-using ::vendor::lineage::power::V1_0::LineageFeature;
 
-struct Power : public IPower, public ILineagePower {
+struct Power : public IPower {
     // Methods from ::android::hardware::power::V1_0::IPower follow.
 
     Power();
-    status_t registerAsSystemService();
 
     Return<void> setInteractive(bool interactive) override;
     Return<void> powerHint(PowerHint_1_0 hint, int32_t data) override;
@@ -68,9 +63,6 @@ struct Power : public IPower, public ILineagePower {
     Return<void> powerHintAsync(PowerHint_1_0 hint, int32_t data) override;
     // Methods from ::android::hardware::power::V1_2::IPower follow
     Return<void> powerHintAsync_1_2(PowerHint_1_2 hint, int32_t data) override;
-
-    // Methods from ::vendor::lineage::power::V1_0::ILineagePower follow.
-    Return<int32_t> getFeature(LineageFeature feature) override;
 };
 
 }  // namespace implementation
